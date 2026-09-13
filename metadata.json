@@ -1,0 +1,6 @@
+{
+  "name": "DENKIS Engineering",
+  "description": "Engineering practice specializing in water, road, and electrical infrastructure design.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
