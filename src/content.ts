@@ -28,7 +28,7 @@
 
 // --- 1. IMAGE IMPORTS ---
 // Put your image files inside `src/assets/images/` and import them here:
-import logoImage from './assets/images/logo.svg';
+import logoImage from './assets/images/DENKIS logo.PNG';
 import heroBannerImage from './assets/images/infrastructure_bridge_night_1788803236215.jpg';
 
 // You can also import additional project/work images here if you wish:
