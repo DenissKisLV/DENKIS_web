@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 590" width="100%" height="100%">
+  <!-- Background plate (transparent or white) -->
+  <rect width="520" height="590" fill="#ffffff" rx="16"/>
+
+  <!-- Main "D" Glyph in deep dark espresso/black (#180605) -->
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M 25 25 
+       H 215 
+       C 325 25, 375 105, 375 255 
+       C 375 405, 325 485, 215 485 
+       H 25 
+       V 25 
+       Z 
+       M 82 80 
+       H 210 
+       C 285 80, 315 135, 315 255 
+       C 315 375, 285 430, 210 430 
+       H 82 
+       V 80 
+       Z"
+    fill="#180605"
+  />
+
+  <!-- Letter "K" overlayed with white fill and dark outline -->
+  <!-- Vertical Bar of K -->
+  <rect
+    x="160"
+    y="25"
+    width="55"
+    height="460"
+    fill="#ffffff"
+    stroke="#180605"
+    stroke-width="4"
+  />
+
+  <!-- Upper Diagonal Arm of K -->
+  <polygon
+    points="160,220 215,180 420,25 500,25 300,248 215,248"
+    fill="#ffffff"
+    stroke="#180605"
+    stroke-width="4"
+    stroke-linejoin="miter"
+  />
+
+  <!-- Lower Diagonal Arm of K -->
+  <polygon
+    points="215,248 300,248 510,485 430,485 215,288 160,220"
+    fill="#ffffff"
+    stroke="#180605"
+    stroke-width="4"
+    stroke-linejoin="miter"
+  />
+
+  <!-- Vertical separator lines on K's bar -->
+  <line x1="160" y1="25" x2="160" y2="485" stroke="#180605" stroke-width="4"/>
+  <line x1="215" y1="25" x2="215" y2="180" stroke="#180605" stroke-width="4"/>
+  <line x1="215" y1="288" x2="215" y2="485" stroke="#180605" stroke-width="4"/>
+
+  <!-- Text "engineering" in clean lowercase underneath -->
+  <text
+    x="260"
+    y="566"
+    text-anchor="middle"
+    fill="#180605"
+    font-size="76"
+    font-weight="600"
+    letter-spacing="2px"
+    font-family="'Plus Jakarta Sans', system-ui, -apple-system, sans-serif"
+  >
+    engineering
+  </text>
+</svg>
