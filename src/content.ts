@@ -29,7 +29,14 @@
 // --- 1. IMAGE IMPORTS ---
 // Put your image files inside `src/assets/images/` and import them here:
 import logoImage from './assets/images/DENKIS logo.PNG';
-import heroBannerImage from './assets/images/infrastructure_bridge_night_1788803236215.jpg';
+import defaultHeroImage from './assets/images/infrastructure_bridge_night_1788803236215.jpg';
+
+// Automatically detect your uploaded collage image (collage-10photos-1920x1440.png) in src/assets/images/
+const availableImages = import.meta.glob('./assets/images/*', { eager: true, import: 'default' }) as Record<string, string>;
+const uploadedCollagePath = Object.keys(availableImages).find((path) =>
+  path.toLowerCase().includes('collage') || path.includes('1920x1440')
+);
+const heroBannerImage = (uploadedCollagePath && availableImages[uploadedCollagePath]) || defaultHeroImage;
 
 // You can also import additional project/work images here if you wish:
 import waterImg from './assets/images/water_infrastructure_1788706577968.jpg';
@@ -52,9 +59,9 @@ export interface ShowcaseImage {
 }
 
 export interface LanguageContent {
-  heading: string;
+  heading?: string;
   paragraphs: string[];
-  inquireButtonText: string;
+  inquireButtonText?: string;
   galleryHeading?: string;
   copyright: string;
 }
@@ -66,6 +73,9 @@ export interface SiteConfig {
   // Primary / default language: 'EN' | 'LV' | 'RU'
   defaultLanguage: 'EN' | 'LV' | 'RU';
   
+  // Footer contact info string
+  footerContact: string;
+
   // Images
   images: {
     // Top-left header logo image (from src/assets/images/)
@@ -79,10 +89,11 @@ export interface SiteConfig {
   // Optional showcase gallery images (set to [] if you don't want any extra images)
   showcaseImages: ShowcaseImage[];
 
-  // Email inquiry settings (used when the user clicks the Inquire button)
+  // Email inquiry settings
   emailConfig: {
     recipientUser: string;   // first part of email before @
     recipientDomain: string; // domain part of email after @
+    contactEmail: string;    // full email address
     subject: {
       EN: string;
       LV: string;
@@ -105,7 +116,9 @@ export interface SiteConfig {
 
 export const siteContent: SiteConfig = {
   brandName: 'DENKIS',
-  defaultLanguage: 'EN',
+  defaultLanguage: 'LV',
+
+  footerContact: 'DENKIS SIA - Reģ.nr.40103728081 - Piedrujas iela 11, Rīga, LV-1073 - denkis.projekti@gmail.com -',
 
   images: {
     // Point this to your logo in src/assets/images
@@ -114,7 +127,7 @@ export const siteContent: SiteConfig = {
 
     // Point this to your panoramic hero banner in src/assets/images
     heroBanner: heroBannerImage,
-    heroBannerAlt: 'Illuminated infrastructure bridge at night',
+    heroBannerAlt: 'DENKIS inženiertehnisko rasējumu un projektu kolāža / Engineering design drawings collage',
   },
 
   /**
@@ -123,89 +136,47 @@ export const siteContent: SiteConfig = {
    * If you want to show additional photos/projects on the page, keep items here.
    * If you want a minimal page without extra images, simply set: showcaseImages: []
    */
-  showcaseImages: [
-    // You can uncomment or add more images here whenever you wish:
-    /*
-    {
-      id: 'water-networks',
-      title: {
-        EN: 'Water & Wastewater Networks',
-        LV: 'Ūdensapgāde un kanalizācija',
-        RU: 'Водоснабжение и водоотведение',
-      },
-      image: waterImg,
-    },
-    {
-      id: 'road-infrastructure',
-      title: {
-        EN: 'Road & Transportation Geometry',
-        LV: 'Ceļu un satiksmes projektēšana',
-        RU: 'Проектирование дорог и развязок',
-      },
-      image: roadImg,
-    },
-    {
-      id: 'electrical-systems',
-      title: {
-        EN: 'Electrical & Power Distribution',
-        LV: 'Elektroapgāde un apgaismojums',
-        RU: 'Электроснабжение и освещение',
-      },
-      image: electricalImg,
-    },
-    */
-  ],
+  showcaseImages: [],
 
-  // Inquire button settings: opens user's email client directly
+  // Email settings
   emailConfig: {
-    recipientUser: 'dkiselovs',
+    recipientUser: 'denkis.projekti',
     recipientDomain: 'gmail.com',
+    contactEmail: 'denkis.projekti@gmail.com',
     subject: {
-      EN: 'DENKIS — Infrastructure Project Inquiry',
-      LV: 'DENKIS — Infrastruktūras projekta pieteikums',
-      RU: 'DENKIS — Запрос на проектирование инфраструктуры',
+      EN: 'DENKIS — Project Inquiry',
+      LV: 'DENKIS — Projekta pieteikums',
+      RU: 'DENKIS — Запрос на проектирование',
     },
     bodyTemplate: {
-      EN: 'Hello DENKIS Engineering team,\n\nI would like to discuss an infrastructure design project.\n\nProject details:\n\n',
-      LV: 'Labdien, DENKIS inženieru komanda!\n\nVēlos pieteikt infrastruktūras projektēšanas projektu.\n\nProjekta apraksts:\n\n',
-      RU: 'Здравствуйте, команда DENKIS!\n\nХочу обсудить проект проектирования инфраструктуры.\n\nДетали проекта:\n\n',
+      EN: 'Hello DENKIS team,\n\nI would like to inquire about project design services.\n\n',
+      LV: 'Labdien, DENKIS komanda!\n\nVēlos pieteikt projektēšanas pakalpojumus.\n\n',
+      RU: 'Здравствуйте, команда DENKIS!\n\nХочу обсудить проектные услуги.\n\n',
     },
   },
 
   // Texts for all languages
   content: {
     EN: {
-      heading: 'Welcome!',
       paragraphs: [
-        'Welcome to DENKIS — independent engineering design practice delivering specialized civil and utility infrastructure solutions for municipal, commercial, and industrial developments. We guide projects from preliminary feasibility studies through detailed construction documentation.',
-        'Our practice unites comprehensive technical expertise across utility networks, roadway geometry, and electrical distribution systems. By applying coordinated 3D modeling and precision engineering calculations, we eliminate multi-agency clash points before ground is broken.',
-        'Every design fulfills strict technical standards, safety regulations, and environmental compliance. We are committed to turning complex civil engineering challenges into durable, high-performance, and cost-effective infrastructure.',
+        'We provide design services in the fields of energy and infrastructure. We design power supply connections and indoor power supply, drainage solutions for forests, agricultural and urban territories, and road infrastructure.',
       ],
-      inquireButtonText: 'Inquire About the Project',
       galleryHeading: 'Selected Works',
       copyright: 'All rights reserved.',
     },
 
     LV: {
-      heading: 'Laipni lūdzam!',
       paragraphs: [
-        'Laipni lūdzam DENKIS — specializētos inženiertehnisko un infrastruktūras risinājumu projektos. Mēs nodrošinām visaptverošus projektēšanas pakalpojumus pašvaldību, komerciālajiem un industriālajiem objektiem, vadot projektus no priekšizpētes līdz detalizētai būvdokumentācijai.',
-        'Mūsu prakse apvieno padziļinātu tehnisko kompetenci inženiertīklu, ceļu ģeometrijas un elektroapgādes sistēmu projektēšanā. Izmantojot koordinētu 3D modelēšanu un precīzus inženiertehniskos aprēķinus, mēs garantējam saskaņotus risinājumus pirms būvdarbu uzsākšanas.',
-        'Mūsu prioritāte ir uzticami, ekonomiski pamatoti risinājumi, kas atbilst stingrākajiem nozares standartiem, drošības un vides prasībām. Mēs pārvēršam sarežģītus inženiertehniskos izaicinājumus ilgmūžīgā infrastruktūrā.',
+        'Mēs sniedzam projektēšanas pakalpojumus enerģētikas un infrastruktūras jomās. Mēs projektējām energoapgādes pieslēgumus un iekštelpu energoapgādi, meliorācijas risinājumus mežu, lauksaimniecību un pilsētas teritorijas un ceļu infrastruktūru.',
       ],
-      inquireButtonText: 'Pieteikt projektu',
       galleryHeading: 'Mūsu darbi',
       copyright: 'Visas tiesības aizsargātas.',
     },
 
     RU: {
-      heading: 'Добро пожаловать!',
       paragraphs: [
-        'Добро пожаловать в DENKIS — специализированное инженерное проектирование инфраструктуры. Мы предоставляем комплексные проектные услуги для муниципальных, коммерческих и промышленных объектов, сопровождая проекты от предпроектных проработок до рабочей документации.',
-        'Наша практика объединяет передовую экспертизу в области инженерных сетей, дорожной геометрии и систем электроснабжения. Скоординированное 3D-моделирование и точные инженерные расчёты исключают коллизии ещё на этапе проектирования.',
-        'Мы создаём надёжные и экономически эффективные решения, полностью соответствующие строительным нормам, требованиям безопасности и экологическим стандартам. Превращаем сложные инженерные вызовы в долговечную инфраструктуру.',
+        'Мы предоставляем услуги по проектированию в сфере энергетики и инфраструктуры. Мы проектируем подключения к электросетям и внутреннее электроснабжение, системы мелиорации для лесных угодий, сельскохозяйственных и городских территорий, а также дорожную инфраструктуру.',
       ],
-      inquireButtonText: 'Запросить проект',
       galleryHeading: 'Наши проекты',
       copyright: 'Все права защищены.',
     },
