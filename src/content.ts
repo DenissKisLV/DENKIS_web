@@ -29,7 +29,7 @@
 // --- 1. IMAGE IMPORTS ---
 // Put your image files inside `src/assets/images/` and import them here:
 import logoImage from './assets/images/DENKIS logo.PNG';
-import defaultHeroImage from './assets/images/infrastructure_bridge_night_1788803236215.jpg';
+import defaultHeroImage from './assets/images/DENKIS hero.jpg';
 
 // Automatically detect your uploaded collage image (collage-10photos-1920x1440.png) in src/assets/images/
 const availableImages = import.meta.glob('./assets/images/*', { eager: true, import: 'default' }) as Record<string, string>;
